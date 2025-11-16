@@ -37,10 +37,12 @@ class Reset_WordPress_Fresh_Install {
 		if ( isset( $_POST['rwfi_run'] ) ) {
 			check_admin_referer( 'rwfi_reset' );
 
-			$confirm = isset( $_POST['rwfi_confirm'] ) ? trim( wp_unslash( $_POST['rwfi_confirm'] ) ) : '';
+			$confirm = isset( $_POST['rwfi_confirm'] )
+				? sanitize_text_field( wp_unslash( $_POST['rwfi_confirm'] ) )
+				: '';
 
 			if ( 'RESET' !== $confirm ) {
-				$error = 'You must type "RESET" in the confirmation box to proceed.';
+				$error = __( 'You must type "RESET" in the confirmation box to proceed.', 'reset-wp-fresh' );
 			} else {
 				$keep_users     = ! empty( $_POST['rwfi_keep_users'] );
 				$delete_uploads = ! empty( $_POST['rwfi_delete_uploads'] );
